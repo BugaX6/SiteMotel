@@ -1,5 +1,6 @@
 package br.com.verve.verve.usuario;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,12 +19,16 @@ public class Usuario {
     private Long id;
 
     @NotBlank
+    @Column(nullable = false)
     private String nome;
 
     @NotBlank
     @Email
+    @Column(nullable = false, unique = true)
     private String email;
 
+    @NotBlank 
+    @Column(nullable = false)
     private String senha;
 
 
