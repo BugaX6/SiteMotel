@@ -3,6 +3,8 @@ package br.com.verve.verve.usuario;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import br.com.verve.verve.exception.EmailJaCadastradoException;
+
 @Service 
 public class UsuarioService {
     private final UsuarioRepository usuarioRepository;
@@ -20,7 +22,7 @@ public class UsuarioService {
 
     public void cadastrarUsuario(Usuario usuario){
      if (emailJaCadastrado(usuario.getEmail())) {
-        throw new IllegalArgumentException("E-mail já cadastrado!");
+        throw new EmailJaCadastradoException("E-mail já cadastrado!");
      }   
      usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
      usuarioRepository.save(usuario);
