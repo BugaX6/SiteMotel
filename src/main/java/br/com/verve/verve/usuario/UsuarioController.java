@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -37,6 +38,25 @@ public class UsuarioController {
 
         Usuario usuario = usuarioService.buscarPorEmail(
                 authentication.getName()
+        );
+
+        UsuarioResposta resposta = new UsuarioResposta(
+                usuario.getId(),
+                usuario.getNome(),
+                usuario.getEmail()
+        );
+
+        return ResponseEntity.ok(resposta);
+    }
+
+    @PutMapping("/me")
+    public ResponseEntity<UsuarioResposta> atualizarUsuarioAutenticado(
+            Authentication authentication,
+            @Valid @RequestBody UsuarioAtualizacaoRequest dados) {
+
+        Usuario usuario = usuarioService.atualizarUsuario(
+                authentication.getName(),
+                dados
         );
 
         UsuarioResposta resposta = new UsuarioResposta(

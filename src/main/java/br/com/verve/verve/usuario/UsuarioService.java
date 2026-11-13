@@ -40,4 +40,23 @@ public class UsuarioService {
                         new UsuarioNaoEncontradoException("Usuário não encontrado!")
                 );
     }
+
+    public Usuario atualizarUsuario(
+            String emailAtual,
+            UsuarioAtualizacaoRequest dados) {
+
+        Usuario usuario = buscarPorEmail(emailAtual);
+
+        if (!usuario.getEmail().equals(dados.email())
+                && emailJaCadastrado(dados.email())) {
+
+            throw new EmailJaCadastradoException("E-mail já cadastrado!");
+        }
+
+        usuario.setNome(dados.nome());
+        usuario.setEmail(dados.email());
+        usuario.setSenha(passwordEncoder.encode(dados.senha()));
+
+        return usuarioRepository.save(usuario);
+    }
 }
