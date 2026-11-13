@@ -30,6 +30,7 @@ public class UsuarioService {
             throw new EmailJaCadastradoException("E-mail já cadastrado!");
         }
 
+        usuario.setPerfil(PerfilUsuario.CLIENTE);
         usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
         usuarioRepository.save(usuario);
     }

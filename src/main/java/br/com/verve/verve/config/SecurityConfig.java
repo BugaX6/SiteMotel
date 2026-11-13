@@ -1,4 +1,3 @@
-
 package br.com.verve.verve.config;
 
 import br.com.verve.verve.security.CustomUserDetailsService;
@@ -30,6 +29,7 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/usuarios", "/auth/login").permitAll()
+                        .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form.disable())
